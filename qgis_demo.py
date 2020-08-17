@@ -1,6 +1,7 @@
 import sys
 from qgis.core import (
     QgsVectorLayer,
+    QgsRasterLayer,
     QgsPoint,
     QgsPointXY,
     QgsProject,
@@ -34,18 +35,27 @@ canvas = QgsMapCanvas()
 canvas.setWindowTitle("Airport Viewer")
 canvas.show()
 
-vlayer = QgsVectorLayer('testdata/Leased Federal Airports.gdb', "Airports layer", "ogr")
+vlayer = QgsVectorLayer('testdata/Australia_Airports.geojson', "Airports layer", "ogr")
 if not vlayer.isValid():
-    print("Layer failed to load!")
+    print("Vector layer failed to load!")
+
+urlWithParams = 'type=xyz&url=https://a.tile.openstreetmap.org/%7Bz%7D/%7Bx%7D/%7By%7D.png&zmax=19&zmin=0&crs=EPSG3857'
+rlayer = QgsRasterLayer(urlWithParams, 'OpenStreetMap', 'wms')  
+
+if rlayer.isValid():
+    QgsProject.instance().addMapLayer(rlayer)
+else:
+    print('Raster layer failed to load!')
 
 # add layer to the registry
+QgsProject.instance().addMapLayer(rlayer)
 QgsProject.instance().addMapLayer(vlayer)
 
 # set extent to the extent of our layer
 canvas.setExtent(vlayer.extent())
 
 # set the map canvas layer set
-canvas.setLayers([vlayer])
+canvas.setLayers([vlayer,rlayer])
 
 qgs.exec_()
 
