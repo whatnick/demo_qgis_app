@@ -19,7 +19,7 @@ distribution of the application. It involves 2 steps:
 - Detecting the mode in which PyInstaller is running and setting paths accordingly
 - A spec file to cleanly setup options to pack the binary
 
-To get the packaging toolind install pyinstaller via pip into the OSGeo4W python 3.7 environment ( current as of 28-09-2020). Python3-pip must be installed as a package in the osgeo4w setup. It is safer to pack a heavier directory based version of the
+To get the packaging tooling install pyinstaller via pip into the OSGeo4W python 3.7 environment ( current as of 28-09-2020). Python3-pip must be installed as a package in the osgeo4w setup. It is safer to pack a heavier directory based version of the
 application to avoid possible DLL hell due to different versions of QGIS being installed on the user machine compared to the
 developers. Install pyinstaller from PyPI, `python3 -m pip install setuptools pyinstaller` should work on most platforms.
 
