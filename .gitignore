@@ -1,0 +1,6 @@
+# Python temp files
+__pycache__/
+
+# Pyinstaller Distribution
+build/
+dist/

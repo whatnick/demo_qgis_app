@@ -30,6 +30,8 @@ def setup_qgis(qgs_app):
         bundle_dir = sys._MEIPASS
         qgis_prefix_path = bundle_dir
         qgis_plugin_path = bundle_dir + '\qgis_plugins'
+        qgis_proj_dir = bundle_dir + '\proj_db'
+        os.environ["PROJ_LIB"] = qgis_proj_dir
     else:
         print("Running In A Normal Python Environment")
         bundle_dir = os.path.dirname(os.path.abspath(__file__))
