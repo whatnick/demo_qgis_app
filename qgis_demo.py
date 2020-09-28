@@ -17,11 +17,13 @@ from qgis.gui import (
     QgsMapCanvasItem,
     QgsRubberBand,
 )
+from PyQt5 import QtGui
 
 # Supply the path to the qgis install location
 # This is supplied by the environment variable
 # Invoke this script using "C:\OSGeo4W64\bin\python-qgis"
 # QgsApplication.setPrefixPath("C:\\OSGeo4W64\\apps\\qgis", True)
+APP_ICON = "graphics/airports.ico"
 
 
 def setup_qgis(qgs_app):
@@ -34,6 +36,7 @@ def setup_qgis(qgs_app):
         qgis_proj_dir = bundle_dir + "\proj_db"
         os.environ["PROJ_LIB"] = qgis_proj_dir
         os.environ["TEST_DATA"] = bundle_dir + "/testdata/Australia_Airports.geojson"
+        os.environ["APP_ICON"] = os.path.join(bundle_dir, APP_ICON)
     else:
         print("Running In A Normal Python Environment")
         bundle_dir = os.path.dirname(os.path.abspath(__file__))
@@ -54,6 +57,10 @@ qgs = QgsApplication([], True)
 
 # load providers
 setup_qgis(qgs)
+
+# setup icon in bundle mode
+icon_path = os.getenv("APP_ICON", APP_ICON)
+qgs.setWindowIcon(QtGui.QIcon(icon_path))
 
 # Write your code here to load some layers, use processing
 # algorithms, etc.
@@ -86,6 +93,9 @@ canvas.setExtent(vlayer.extent())
 
 # set the map canvas layer set
 canvas.setLayers([vlayer, rlayer])
+
+# set canvas icon
+canvas.setWindowIcon(QtGui.QIcon(icon_path))
 
 qgs.exec_()
 
