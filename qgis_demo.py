@@ -76,16 +76,25 @@ vlayer = QgsVectorLayer(
 if not vlayer.isValid():
     print("Vector layer failed to load!")
 
+ecw_file = "testdata/64002.ecw"
+ecw_layer = QgsRasterLayer(ecw_file, "Canberra 100K Map", "gdal")
+
+if ecw_layer.isValid():
+    QgsProject.instance().addMapLayer(ecw_layer)
+else:
+    print("ECW layer failed to load!")
+
 urlWithParams = "type=xyz&url=https://a.tile.openstreetmap.org/%7Bz%7D/%7Bx%7D/%7By%7D.png&zmax=19&zmin=0&crs=EPSG3857"
 rlayer = QgsRasterLayer(urlWithParams, "OpenStreetMap", "wms")
 
 if rlayer.isValid():
     QgsProject.instance().addMapLayer(rlayer)
 else:
-    print("Raster layer failed to load!")
+    print("XYZ layer failed to load!")
 
 # add layer to the registry
 QgsProject.instance().addMapLayer(rlayer)
+QgsProject.instance().addMapLayer(ecw_layer)
 QgsProject.instance().addMapLayer(vlayer)
 
 # set extent to the extent of our layer

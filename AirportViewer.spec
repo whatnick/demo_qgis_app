@@ -6,6 +6,7 @@ a = Analysis(['qgis_demo.py'],
          pathex=[workdir],
          binaries=None,
          datas=[('c:/OSGeo4W64/apps/qgis/plugins/*.dll','qgis_plugins'),
+                ('c:/OSGeo4W64/bin/gdalplugins/*.dll', 'gdalplugins'),
                 ('c:/OSGeo4W64/share/proj/*','proj_db'),
                 (os.path.join(workdir,'testdata/*'),'testdata'),
                 (os.path.join(workdir,'graphics/*'),'graphics'),],
@@ -28,4 +29,4 @@ exe = EXE(pyz,
       strip=None,
       upx=True,
       icon='graphics/airports.ico',
-      console=False)
+      console=True)
