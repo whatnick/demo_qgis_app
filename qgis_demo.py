@@ -34,8 +34,13 @@ def setup_qgis(qgs_app):
         qgis_prefix_path = bundle_dir
         qgis_plugin_path = bundle_dir + "\qgis_plugins"
         qgis_proj_dir = bundle_dir + "\proj_db"
+        qgis_gdal_plugins = bundle_dir + "\gdalplugins"
+        qgis_extra_bin = bundle_dir + "\DLLs"
+        os.environ['PATH'] += ';'+qgis_extra_bin
         os.environ["PROJ_LIB"] = qgis_proj_dir
+        os.environ["GDAL_DRIVER_PATH"] = qgis_gdal_plugins
         os.environ["TEST_DATA"] = bundle_dir + "/testdata/Australia_Airports.geojson"
+        os.environ["TEST_ECW"] = bundle_dir + "/testdata/64002.ecw"
         os.environ["APP_ICON"] = os.path.join(bundle_dir, APP_ICON)
     else:
         print("Running In A Normal Python Environment")
@@ -76,7 +81,7 @@ vlayer = QgsVectorLayer(
 if not vlayer.isValid():
     print("Vector layer failed to load!")
 
-ecw_file = "testdata/64002.ecw"
+ecw_file = os.getenv("TEST_ECW", "testdata/64002.ecw")
 ecw_layer = QgsRasterLayer(ecw_file, "Canberra 100K Map", "gdal")
 
 if ecw_layer.isValid():
@@ -92,16 +97,11 @@ if rlayer.isValid():
 else:
     print("XYZ layer failed to load!")
 
-# add layer to the registry
-QgsProject.instance().addMapLayer(rlayer)
-QgsProject.instance().addMapLayer(ecw_layer)
-QgsProject.instance().addMapLayer(vlayer)
-
 # set extent to the extent of our layer
-canvas.setExtent(vlayer.extent())
+canvas.setExtent(ecw_layer.extent())
 
 # set the map canvas layer set
-canvas.setLayers([vlayer, rlayer])
+canvas.setLayers([vlayer, ecw_layer, rlayer])
 
 # set canvas icon
 canvas.setWindowIcon(QtGui.QIcon(icon_path))
