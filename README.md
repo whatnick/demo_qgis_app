@@ -4,7 +4,7 @@
   - Load OSM Maptiles using an XYZ Layer
   - Load static ecw raster data for Canberra 100K mapsheet form a hardcoded path
   - Load static vector data for Australian airports from a hardcoded path
-- Launch the application from OSGeo4W CLI or standard cli using `C:\OSGeo4W64\apps\Python37\python.exe qgis_demo.py`
+- Launch the application from OSGeo4W CLI or standard cli using `C:\OSGeo4W64\bin\python-qgis qgis_demo.py`
 
 ## Developer Setup
 - Launch VSCode and start a new python project
