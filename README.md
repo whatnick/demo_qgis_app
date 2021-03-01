@@ -9,6 +9,9 @@
 ## Developer Setup
 - Launch VSCode and start a new python project
 - Select Python3.7 that ships with Osgeo4W64 as the interpreter
+- Install pyinstalller via pip
+- Run application from python as above
+- Build stand-alone .exe file using `build_exe.bat`
 
 ![Developer Setup](doc/vscode_qgis.png)
 
